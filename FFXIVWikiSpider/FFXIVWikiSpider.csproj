@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RootNamespace>Kuranado.Moe.FFXIV</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.32" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ffxiv_commonsetting\FFXIVCommonSetting.csproj" />
+  </ItemGroup>
+
+</Project>
