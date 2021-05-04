@@ -77,9 +77,9 @@ namespace Kuranado.Moe.FFXIV
             /// </summary>
             public bool Convertible;
             /// <summary>
-            /// 该物品的wiki链接
+            /// 该物品的购买价格(如果不可购买则为0)
             /// </summary>
-            public string Link;
+            public short Cost;
         }
         #endregion
 
@@ -118,6 +118,14 @@ namespace Kuranado.Moe.FFXIV
                                                  航行距离：(?<distance>[\d+-]+)[^恩]+
                                                  恩惠：(?<lucky>[\d+-]+)[^魔]+
                                                  魔导机械修理材料×(?<repair>\d+)";
+        private const string craftInfoPattern = @" (?<name>[\u4e00-\u9fa5]+)\s*?   #物品名字
+                                                   ×(?<num>\d+)\s*?               #物品数量
+                                                   \[
+                                                   (\s*?/?\s*?[\u4e00-\u9fa5]:\d{1,3}★?\d?){0,2}   #0个到2个制作职业信息,例如 锻:39 / 甲:37 
+                                                   (\s*?/?\s*?理符)?               #可能存在理符获得途径
+                                                   (\s*?/?\s*?(?<cost>\d+)G)?      #价格
+                                                   (\s*?/?\s*?(?<cvt>兑换))?       #是否可兑换
+                                                   \]";
         #endregion
 
         #region Properties
@@ -287,23 +295,34 @@ namespace Kuranado.Moe.FFXIV
 
             //  part info
             var partInfoHtml = html.DocumentNode.SelectSingleNode(partInfoXPath);
-            var regex = new Regex(partInfoPattern, RegexOptions.Compiled | RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace);
-            var match = regex.Match(partInfoHtml.OuterHtml);
-            result.UsingLv = byte.Parse(match.Groups["lv"].Value);
-            result.Weight = byte.Parse(match.Groups["weight"].Value);
-            result.ExplorePerf = short.Parse(match.Groups["explore"].Value);
-            result.CollectionPerf = short.Parse(match.Groups["collection"].Value);
-            result.CruisingSpeed = short.Parse(match.Groups["speed"].Value);
-            result.SailingDistance = short.Parse(match.Groups["distance"].Value);
-            result.Lucky = short.Parse(match.Groups["lucky"].Value);
-            result.RepairCost = byte.Parse(match.Groups["repair"].Value);
+            var partRegex = new Regex(partInfoPattern, RegexOptions.Compiled | RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace);
+            var partMatch = partRegex.Match(partInfoHtml.OuterHtml);
+            result.UsingLv = byte.Parse(partMatch.Groups["lv"].Value);
+            result.Weight = byte.Parse(partMatch.Groups["weight"].Value);
+            result.ExplorePerf = short.Parse(partMatch.Groups["explore"].Value);
+            result.CollectionPerf = short.Parse(partMatch.Groups["collection"].Value);
+            result.CruisingSpeed = short.Parse(partMatch.Groups["speed"].Value);
+            result.SailingDistance = short.Parse(partMatch.Groups["distance"].Value);
+            result.Lucky = short.Parse(partMatch.Groups["lucky"].Value);
+            result.RepairCost = byte.Parse(partMatch.Groups["repair"].Value);
 
             //  craft info
             var craftInfoHtml = html.DocumentNode.SelectSingleNode(craftXPath);
-            foreach(var craftItem in craftInfoHtml.ChildNodes)
+            var craftRegex = new Regex(craftInfoPattern, RegexOptions.Compiled | RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace);
+            var craftList = new List<(ItemSimInfo item, short num)>();
+            foreach (var craftItem in craftInfoHtml.ChildNodes)
             {
                 var innerText = craftItem.ChildNodes[0].InnerText;
+                var craftMatch = craftRegex.Match(innerText).Groups;
+                var craftInfo = new ItemSimInfo();
+                var num = short.Parse(craftMatch["nun"].Value);
+                craftInfo.Name = craftMatch["name"].Value;
+                craftInfo.Convertible = craftMatch["cvt"].Value != "";
+                if (craftMatch["cost"].Value != "")
+                    craftInfo.Cost = short.Parse(craftMatch["cost"].Value);
+                craftList.Add((craftInfo, num));
             }
+            result.MeterialList = craftList.ToArray();
 
             return result;
         }

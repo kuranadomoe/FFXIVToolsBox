@@ -45,19 +45,25 @@ namespace Kuranado.Moe.FFXIV
            "恩惠" + match.Groups["lucky"].Value + System.Environment.NewLine +
            "修理材料" + match.Groups["repair"].Value);
 
-            var reg2 = new Regex(@" (?<name>[\u4e00-\u9fa5])\s*?    //物品名称
-                                    ×(?<num>\d+)\s*?               //数量
+            var reg2 = new Regex(@" (?<name>[\u4e00-\u9fa5]+)\s*?   #物品名字
+                                    ×(?<num>\d+)\s*?               #物品数量
                                     \[
-                                    [\u4e00-\u9fa5:\d\s★]+           //必定存在至少一个
-/?\s*?(?<cost>\d+)G
-\]",
+                                    (\s*?/?\s*?[\u4e00-\u9fa5]:\d{1,3}★?\d?){0,2}   #0个到2个制作职业信息,例如 锻:39 / 甲:37 
+                                    (\s*?/?\s*?理符)?               #可能存在理符获得途径
+                                    (\s*?/?\s*?(?<cost>\d+)G)?      #价格
+                                    (\s*?/?\s*?(?<cvt>兑换))?       #是否可兑换
+                                    \]",
                                   RegexOptions.Compiled | RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace);
             var testOutput = "";
+            var matchOutput = "";
             foreach (var node in node2.ChildNodes)
             {
                 testOutput += node.ChildNodes[0].InnerText + System.Environment.NewLine;
+                var tmp = reg2.Match(node.ChildNodes[0].InnerText);
+                matchOutput += $@"物品{tmp.Groups["name"]}-数量{tmp.Groups["num"]}-价格{tmp.Groups["cost"]}-兑换:{tmp.Groups["cvt"]}{System.Environment.NewLine}";
             }
             MessageBox.Show(testOutput);
+            MessageBox.Show(matchOutput);
         }
     }
 }
