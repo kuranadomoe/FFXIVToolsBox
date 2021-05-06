@@ -1,23 +1,24 @@
 ﻿using System;
+using System.IO;
 
 namespace Kuranado.Moe.FFXIV
 {
     public static class CommonSetting
     {
         /// <summary>
-        /// 0v0我自己写的全部ffxiv小工具的配置文件路径
+        /// 0v0我自己写的全部ffxiv小工具的配置文件完整路径
         /// </summary>
-        public const string ConfigPath = @".\kconfig.json";
+        public static readonly string ConfigPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"./kconfig.json"));
 
         /// <summary>
         /// 存放程序数据的目录
         /// </summary>
-        public static readonly string DataDir = @"./MyData";
+        public static readonly string DataDir = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"./MyData"));
 
         /// <summary>
         /// 灰机wiki相关数据目录
         /// </summary>
-        public static readonly string WikiDataDir = @"./WikiData";
+        public static readonly string WikiDataDir = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"./WikiData"));
 
         /// <summary>
         /// 部队合建物品分类
