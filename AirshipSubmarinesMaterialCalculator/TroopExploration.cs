@@ -86,7 +86,8 @@ namespace Kuranado.Moe.FFXIV
 
         #region Constant Data
         private const string rootLink = @"https://ff14.huijiwiki.com/wiki/物品:";
-        private static readonly string dataPath = Path.Combine(CommonSetting.WikiDataDir, "TroopExplorationData.xml");
+        private static readonly string dataDir = Path.Combine(CommonSetting.DataDir, nameof(TroopExploration));
+        private static readonly string partsInfoPath = Path.Combine(CommonSetting.DataDir, nameof(TroopExploration), "PartsInfo.xml");
         private static readonly string[][] airshipParts =
         {
             new string[]{"野马级船体","野马级气囊","野马级船首","野马级船尾"},
@@ -237,7 +238,7 @@ namespace Kuranado.Moe.FFXIV
                 var craftInfo = new ItemSimInfo();
                 var num = short.Parse(craftMatch["num"].Value);
                 craftInfo.Name = craftMatch["name"].Value;
-                craftInfo.Convertible = craftMatch["cvt"].Value != "";
+                craftInfo.Convertible = craftMatch["cvt"].Value != "" || craftMatch["cost"].Value != "";
                 if (craftMatch["cost"].Value != "")
                     craftInfo.Cost = short.Parse(craftMatch["cost"].Value);
                 craftList.Add((craftInfo, num));
@@ -247,6 +248,12 @@ namespace Kuranado.Moe.FFXIV
             return result;
         }
 
+        /// <summary>
+        /// 将节点信息转化为xml对象信息
+        /// </summary>
+        /// <param name="doc">xml文档</param>
+        /// <param name="root">需要保存的信息所在的根节点</param>
+        /// <param name="partInfos">需要保存的信息</param>
         private static void Serialization(XmlDocument doc, XmlElement root, PartInfo[][] partInfos)
         {
             foreach (var suit in partInfos)
@@ -254,27 +261,66 @@ namespace Kuranado.Moe.FFXIV
                 var suitElem = doc.CreateElement("Suit");
                 foreach (var part in suit)
                 {
-                    var partElem = doc.CreateElement(part.Name);
-                    partElem.SetAttribute(nameof(part.UsingLv), part.UsingLv.ToString());
-                    partElem.SetAttribute(nameof(part.Weight), part.Weight.ToString());
-                    partElem.SetAttribute(nameof(part.RepairCost), part.RepairCost.ToString());
-                    partElem.SetAttribute(nameof(part.ExplorePerf), part.ExplorePerf.ToString());
-                    partElem.SetAttribute(nameof(part.CollectionPerf), part.CollectionPerf.ToString());
-                    partElem.SetAttribute(nameof(part.CruisingSpeed), part.CruisingSpeed.ToString());
-                    partElem.SetAttribute(nameof(part.SailingDistance), part.SailingDistance.ToString());
-                    partElem.SetAttribute(nameof(part.Lucky), part.Lucky.ToString());
+                    var partElem = doc.CreateElement(nameof(PartInfo.Name));
+                    partElem.SetAttribute(nameof(PartInfo.UsingLv), part.UsingLv.ToString());
+                    partElem.SetAttribute(nameof(PartInfo.Weight), part.Weight.ToString());
+                    partElem.SetAttribute(nameof(PartInfo.RepairCost), part.RepairCost.ToString());
+                    partElem.SetAttribute(nameof(PartInfo.ExplorePerf), part.ExplorePerf.ToString());
+                    partElem.SetAttribute(nameof(PartInfo.CollectionPerf), part.CollectionPerf.ToString());
+                    partElem.SetAttribute(nameof(PartInfo.CruisingSpeed), part.CruisingSpeed.ToString());
+                    partElem.SetAttribute(nameof(PartInfo.SailingDistance), part.SailingDistance.ToString());
+                    partElem.SetAttribute(nameof(PartInfo.Lucky), part.Lucky.ToString());
                     foreach (var (item, num) in part.MeterialList)
                     {
                         var meteriaElem = doc.CreateElement("meteria");
-                        meteriaElem.SetAttribute(nameof(item.Name), item.Name);
-                        meteriaElem.SetAttribute(nameof(item.Convertible), item.Convertible.ToString());
-                        meteriaElem.SetAttribute(nameof(item.Cost), item.Cost.ToString());
+                        meteriaElem.SetAttribute(nameof(ItemSimInfo.Name), item.Name);
+                        meteriaElem.SetAttribute(nameof(ItemSimInfo.Convertible), item.Convertible.ToString());
+                        meteriaElem.SetAttribute(nameof(ItemSimInfo.Cost), item.Cost.ToString());
                         meteriaElem.SetAttribute(nameof(num), num.ToString());
                         partElem.AppendChild(meteriaElem);
                     }
                     suitElem.AppendChild(partElem);
                 }
                 root.AppendChild(suitElem);
+            }
+        }
+
+        /// <summary>
+        /// 将部件信息从xml文档中提取出来
+        /// </summary>
+        /// <param name="root">需要的信息所在的xml节点</param>
+        /// <param name="partInfos">用于存放的数组</param>
+        private static void Deserialization(XmlElement root, PartInfo[][] partInfos)
+        {
+            for (var suitIndex = 0; suitIndex < root.ChildNodes.Count; ++suitIndex)
+            {
+                XmlElement suit = root.ChildNodes[suitIndex] as XmlElement;
+                for (var partIndex = 0; partIndex < 4; ++partIndex)
+                {
+                    var part = new PartInfo();
+                    var partXml = suit.ChildNodes[partIndex] as XmlElement;
+                    part.Name = partXml.Name;
+                    part.UsingLv = byte.Parse(partXml.GetAttribute(nameof(PartInfo.UsingLv)));
+                    part.Weight = byte.Parse(partXml.GetAttribute(nameof(PartInfo.Weight)));
+                    part.RepairCost = byte.Parse(partXml.GetAttribute(nameof(PartInfo.RepairCost)));
+                    part.ExplorePerf = short.Parse(partXml.GetAttribute(nameof(PartInfo.ExplorePerf)));
+                    part.CollectionPerf = short.Parse(partXml.GetAttribute(nameof(PartInfo.CollectionPerf)));
+                    part.CruisingSpeed = short.Parse(partXml.GetAttribute(nameof(PartInfo.CruisingSpeed)));
+                    part.SailingDistance = short.Parse(partXml.GetAttribute(nameof(PartInfo.SailingDistance)));
+                    part.Lucky = short.Parse(partXml.GetAttribute(nameof(PartInfo.Lucky)));
+                    List<(ItemSimInfo item, short num)> meteriaList = new List<(ItemSimInfo item, short num)>();
+                    foreach (XmlElement meteria in partXml.ChildNodes)
+                    {
+                        var craft = new ItemSimInfo();
+                        craft.Name = meteria.GetAttribute(nameof(ItemSimInfo.Name));
+                        craft.Convertible = bool.Parse(meteria.GetAttribute(nameof(ItemSimInfo.Convertible)));
+                        craft.Cost = short.Parse(meteria.GetAttribute(nameof(ItemSimInfo.Cost)));
+                        short num = short.Parse(meteria.GetAttribute(nameof(num)));
+                        meteriaList.Add((craft, num));
+                    }
+                    part.MeterialList = meteriaList.ToArray();
+                    partInfos[suitIndex][partIndex] = part;
+                }
             }
         }
 
@@ -320,10 +366,9 @@ namespace Kuranado.Moe.FFXIV
         /// <param name="path">可选的保存文件路径</param>
         public static void SaveArchive(string path = null)
         {
-            var dir = Path.Combine(CommonSetting.DataDir, nameof(TroopExploration));
-            if (!Directory.Exists(dir))
-                Directory.CreateDirectory(dir);
-            path = path ?? Path.Combine(dir, "PartsInfo.xml");
+            if (!Directory.Exists(dataDir))
+                Directory.CreateDirectory(dataDir);
+            path = path ?? partsInfoPath;
 
             var doc = new XmlDocument();
             var root = doc.CreateElement(nameof(TroopExploration));
@@ -348,14 +393,18 @@ namespace Kuranado.Moe.FFXIV
         /// <param name="reflush">若文件不存在,是否进行爬取并刷新</param>
         public static void LoadArchive(bool reflush = true)
         {
-            if (!File.Exists(dataPath))
+            if (!File.Exists(partsInfoPath))
             {
                 if (reflush)
                     Reflush();
                 return;
             }
             var doc = new XmlDocument();
-            doc.Load(dataPath);
+            doc.Load(partsInfoPath);
+            var airship = doc.DocumentElement[nameof(Airship)];
+            Deserialization(airship, Airship);
+            var submarine = doc.DocumentElement[nameof(Submarine)];
+            Deserialization(submarine, Submarine);
         }
     }// end of class
 }// end of namespace
