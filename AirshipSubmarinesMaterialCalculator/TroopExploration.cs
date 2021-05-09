@@ -147,19 +147,19 @@ namespace Kuranado.Moe.FFXIV
         /// <summary>
         /// 飞空艇船体(第一格)
         /// </summary>
-        public static ReadOnlyCollection<PartInfo> AirshipHull { get; } = new ReadOnlyCollection<PartInfo>((from suit in Airship select suit[0]).ToList());
+        public static ReadOnlyCollection<PartInfo> AirshipHull { get; private set; }
         /// <summary>
         /// 飞空艇舾装(第二格)
         /// </summary>
-        public static ReadOnlyCollection<PartInfo> AirshipOutfitting { get; } = new ReadOnlyCollection<PartInfo>((from suit in Airship select suit[1]).ToList());
+        public static ReadOnlyCollection<PartInfo> AirshipOutfitting { get; private set; }
         /// <summary>
         /// 飞空艇船首(第三格)
         /// </summary>
-        public static ReadOnlyCollection<PartInfo> AirshipBow { get; } = new ReadOnlyCollection<PartInfo>((from suit in Airship select suit[2]).ToList());
+        public static ReadOnlyCollection<PartInfo> AirshipBow { get; private set; }
         /// <summary>
         /// 飞空艇船尾(第四格)
         /// </summary>
-        public static ReadOnlyCollection<PartInfo> AirshipStern { get; } = new ReadOnlyCollection<PartInfo>((from suit in Airship select suit[3]).ToList());
+        public static ReadOnlyCollection<PartInfo> AirshipStern { get; private set; }
 
         /// <summary>
         /// 所有潜艇部件信息
@@ -180,19 +180,19 @@ namespace Kuranado.Moe.FFXIV
         /// <summary>
         /// 潜艇船体(第一格)
         /// </summary>
-        public static ReadOnlyCollection<PartInfo> SubmarineHull { get; } = new ReadOnlyCollection<PartInfo>((from suit in Airship select suit[0]).ToList());
+        public static ReadOnlyCollection<PartInfo> SubmarineHull { get; private set; }
         /// <summary>
         /// 潜艇船尾(第二格)
         /// </summary>
-        public static ReadOnlyCollection<PartInfo> SubmarineStern { get; } = new ReadOnlyCollection<PartInfo>((from suit in Airship select suit[1]).ToList());
+        public static ReadOnlyCollection<PartInfo> SubmarineStern { get; private set; }
         /// <summary>
         /// 潜艇船首(第三格)
         /// </summary>
-        public static ReadOnlyCollection<PartInfo> SubmarineBow { get; } = new ReadOnlyCollection<PartInfo>((from suit in Airship select suit[2]).ToList());
+        public static ReadOnlyCollection<PartInfo> SubmarineBow { get; private set; }
         /// <summary>
         /// 潜艇舰桥(第四格)
         /// </summary>
-        public static ReadOnlyCollection<PartInfo> SubmarineBridge { get; } = new ReadOnlyCollection<PartInfo>((from suit in Airship select suit[3]).ToList());
+        public static ReadOnlyCollection<PartInfo> SubmarineBridge { get; private set; }
         #endregion
 
         #region PrivateMethod
@@ -249,6 +249,21 @@ namespace Kuranado.Moe.FFXIV
         }
 
         /// <summary>
+        /// 重新设置给外部提供信息的属性的值
+        /// </summary>
+        private static void ReinitProperties()
+        {
+            AirshipHull = new ReadOnlyCollection<PartInfo>((from suit in Airship select suit[0]).ToList());
+            AirshipOutfitting = new ReadOnlyCollection<PartInfo>((from suit in Airship select suit[1]).ToList());
+            AirshipBow = new ReadOnlyCollection<PartInfo>((from suit in Airship select suit[2]).ToList());
+            AirshipStern = new ReadOnlyCollection<PartInfo>((from suit in Airship select suit[3]).ToList());
+            SubmarineHull = new ReadOnlyCollection<PartInfo>((from suit in Submarine select suit[0]).ToList());
+            SubmarineStern = new ReadOnlyCollection<PartInfo>((from suit in Submarine select suit[1]).ToList());
+            SubmarineBow = new ReadOnlyCollection<PartInfo>((from suit in Submarine select suit[2]).ToList());
+            SubmarineBridge = new ReadOnlyCollection<PartInfo>((from suit in Submarine select suit[3]).ToList());
+        }
+
+        /// <summary>
         /// 将节点信息转化为xml对象信息
         /// </summary>
         /// <param name="doc">xml文档</param>
@@ -261,7 +276,7 @@ namespace Kuranado.Moe.FFXIV
                 var suitElem = doc.CreateElement("Suit");
                 foreach (var part in suit)
                 {
-                    var partElem = doc.CreateElement(nameof(PartInfo.Name));
+                    var partElem = doc.CreateElement(part.Name);
                     partElem.SetAttribute(nameof(PartInfo.UsingLv), part.UsingLv.ToString());
                     partElem.SetAttribute(nameof(PartInfo.Weight), part.Weight.ToString());
                     partElem.SetAttribute(nameof(PartInfo.RepairCost), part.RepairCost.ToString());
@@ -330,7 +345,7 @@ namespace Kuranado.Moe.FFXIV
         /// <para>从wiki爬取并刷新飞空艇和潜艇部件信息</para>
         /// <para>注意: 此方法可能导致阻塞</para>
         /// </summary>
-        public static void Reflush()
+        public static void ReflushData()
         {
             //  airship
             for (var indexSuit = 0; indexSuit < airshipParts.Length; ++indexSuit)
@@ -358,6 +373,7 @@ namespace Kuranado.Moe.FFXIV
                     Submarine[indexSuit][indexPart] = partInfo;
                 }
             }
+            ReinitProperties();
         }
 
         /// <summary>
@@ -396,7 +412,7 @@ namespace Kuranado.Moe.FFXIV
             if (!File.Exists(partsInfoPath))
             {
                 if (reflush)
-                    Reflush();
+                    ReflushData();
                 return;
             }
             var doc = new XmlDocument();
@@ -405,6 +421,7 @@ namespace Kuranado.Moe.FFXIV
             Deserialization(airship, Airship);
             var submarine = doc.DocumentElement[nameof(Submarine)];
             Deserialization(submarine, Submarine);
+            ReinitProperties();
         }
     }// end of class
 }// end of namespace
