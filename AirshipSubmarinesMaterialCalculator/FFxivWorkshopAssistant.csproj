@@ -7,12 +7,13 @@
     <ProjectGuid>{2B8B1158-91EB-4B66-B711-9DE6174771CF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Kuranado.Moe.FFXIV</RootNamespace>
-    <AssemblyName>AirshipSubmarinesMaterialCalculator</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <AssemblyName>FFxivWorkshopAssistant</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -38,6 +39,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -58,9 +60,12 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FunctionalModule">
+      <HintPath>..\..\..\KuranadoLibrary\KuranadoLibrary\FunctionalModule\bin\Release\net6.0\FunctionalModule.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.11.33.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.11.33\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -77,6 +82,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FunctionalModule\CraftCalc.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FunctionalModule\CraftCalc.Designer.cs">
+      <DependentUpon>CraftCalc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FunctionalModule\HarvestStatistics.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FunctionalModule\HarvestStatistics.Designer.cs">
+      <DependentUpon>HarvestStatistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FunctionalModule\SuitDesign.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FunctionalModule\SuitDesign.Designer.cs">
+      <DependentUpon>SuitDesign.cs</DependentUpon>
+    </Compile>
     <Compile Include="TroopExploration.cs" />
     <Compile Include="Mainform.cs">
       <SubType>Form</SubType>
@@ -88,6 +111,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Mainform.resx">
       <DependentUpon>Mainform.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FunctionalModule\HarvestStatistics.resx">
+      <DependentUpon>HarvestStatistics.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

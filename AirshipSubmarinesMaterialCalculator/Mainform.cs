@@ -96,9 +96,11 @@ namespace Kuranado.Moe.FFXIV
             lvMaterialDetails.Columns[0].Width = -1;
             tabMainLayout.Selected += (x, y) =>
               {
-                  if (y.TabPageIndex == 1)
+                  if (y.TabPageIndex == tabMainLayout.TabPages.IndexOf(tpSuitDesign))
+                  {
                       MessageBox.Show("还没有实现哦~~~");
-                  tabMainLayout.SelectedIndex = 0;
+                      tabMainLayout.SelectedIndex = 0;
+                  }
               };
         }
 
@@ -281,7 +283,7 @@ namespace Kuranado.Moe.FFXIV
                 TroopExploration.LoadArchive();
                 lock (_lock)
                     IsRefreshing = false;
-                MessageBox.Show("数据已更新!");
+                this.Invoke(new Action(() => MessageBox.Show("数据已更新!")));
             }
             new Thread(start).Start();
         }

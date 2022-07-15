@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tabMainLayout = new System.Windows.Forms.TabControl();
             this.tpCraftCalc = new System.Windows.Forms.TabPage();
             this.scShowLayout = new System.Windows.Forms.SplitContainer();
@@ -36,8 +37,8 @@
             this.partColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.normalMaterialColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.npcMaterialColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.tpSuitDesign = new System.Windows.Forms.TabPage();
             this.btnSwitch = new System.Windows.Forms.Button();
+            this.cmsHarvestMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tabMainLayout.SuspendLayout();
             this.tpCraftCalc.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scShowLayout)).BeginInit();
@@ -52,21 +53,22 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabMainLayout.Controls.Add(this.tpCraftCalc);
-            this.tabMainLayout.Controls.Add(this.tpSuitDesign);
-            this.tabMainLayout.Location = new System.Drawing.Point(12, 12);
+            this.tabMainLayout.Location = new System.Drawing.Point(18, 18);
+            this.tabMainLayout.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabMainLayout.Name = "tabMainLayout";
             this.tabMainLayout.SelectedIndex = 0;
-            this.tabMainLayout.Size = new System.Drawing.Size(728, 705);
+            this.tabMainLayout.Size = new System.Drawing.Size(1092, 1058);
             this.tabMainLayout.TabIndex = 0;
             // 
             // tpCraftCalc
             // 
             this.tpCraftCalc.AutoScroll = true;
             this.tpCraftCalc.Controls.Add(this.scShowLayout);
-            this.tpCraftCalc.Location = new System.Drawing.Point(4, 22);
+            this.tpCraftCalc.Location = new System.Drawing.Point(4, 28);
+            this.tpCraftCalc.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tpCraftCalc.Name = "tpCraftCalc";
-            this.tpCraftCalc.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCraftCalc.Size = new System.Drawing.Size(720, 679);
+            this.tpCraftCalc.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpCraftCalc.Size = new System.Drawing.Size(1084, 1026);
             this.tpCraftCalc.TabIndex = 0;
             this.tpCraftCalc.Text = "素材计算";
             this.tpCraftCalc.UseVisualStyleBackColor = true;
@@ -74,7 +76,8 @@
             // scShowLayout
             // 
             this.scShowLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scShowLayout.Location = new System.Drawing.Point(3, 3);
+            this.scShowLayout.Location = new System.Drawing.Point(4, 4);
+            this.scShowLayout.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.scShowLayout.Name = "scShowLayout";
             // 
             // scShowLayout.Panel1
@@ -84,8 +87,9 @@
             // scShowLayout.Panel2
             // 
             this.scShowLayout.Panel2.Controls.Add(this.lvMaterialDetails);
-            this.scShowLayout.Size = new System.Drawing.Size(714, 673);
-            this.scShowLayout.SplitterDistance = 324;
+            this.scShowLayout.Size = new System.Drawing.Size(1076, 1018);
+            this.scShowLayout.SplitterDistance = 488;
+            this.scShowLayout.SplitterWidth = 6;
             this.scShowLayout.TabIndex = 1;
             // 
             // tlpPartsMenu
@@ -96,7 +100,8 @@
             this.tlpPartsMenu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tlpPartsMenu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tlpPartsMenu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tlpPartsMenu.Location = new System.Drawing.Point(3, 3);
+            this.tlpPartsMenu.Location = new System.Drawing.Point(4, 4);
+            this.tlpPartsMenu.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tlpPartsMenu.Name = "tlpPartsMenu";
             this.tlpPartsMenu.RowCount = 11;
             this.tlpPartsMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
@@ -110,7 +115,7 @@
             this.tlpPartsMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
             this.tlpPartsMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
             this.tlpPartsMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
-            this.tlpPartsMenu.Size = new System.Drawing.Size(318, 667);
+            this.tlpPartsMenu.Size = new System.Drawing.Size(477, 1000);
             this.tlpPartsMenu.TabIndex = 0;
             // 
             // lvMaterialDetails
@@ -122,8 +127,9 @@
             this.lvMaterialDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvMaterialDetails.HideSelection = false;
             this.lvMaterialDetails.Location = new System.Drawing.Point(0, 0);
+            this.lvMaterialDetails.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lvMaterialDetails.Name = "lvMaterialDetails";
-            this.lvMaterialDetails.Size = new System.Drawing.Size(386, 673);
+            this.lvMaterialDetails.Size = new System.Drawing.Size(582, 1018);
             this.lvMaterialDetails.TabIndex = 0;
             this.lvMaterialDetails.UseCompatibleStateImageBehavior = false;
             this.lvMaterialDetails.View = System.Windows.Forms.View.Details;
@@ -145,33 +151,30 @@
             this.npcMaterialColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.npcMaterialColumn.Width = 139;
             // 
-            // tpSuitDesign
-            // 
-            this.tpSuitDesign.Location = new System.Drawing.Point(4, 22);
-            this.tpSuitDesign.Name = "tpSuitDesign";
-            this.tpSuitDesign.Padding = new System.Windows.Forms.Padding(3);
-            this.tpSuitDesign.Size = new System.Drawing.Size(720, 679);
-            this.tpSuitDesign.TabIndex = 1;
-            this.tpSuitDesign.Text = "配装设计";
-            this.tpSuitDesign.UseVisualStyleBackColor = true;
-            // 
             // btnSwitch
             // 
             this.btnSwitch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSwitch.Location = new System.Drawing.Point(652, 5);
+            this.btnSwitch.Location = new System.Drawing.Point(978, 8);
+            this.btnSwitch.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSwitch.Name = "btnSwitch";
-            this.btnSwitch.Size = new System.Drawing.Size(88, 23);
+            this.btnSwitch.Size = new System.Drawing.Size(132, 34);
             this.btnSwitch.TabIndex = 1;
             this.btnSwitch.Text = "切换到潜水艇";
             this.btnSwitch.UseVisualStyleBackColor = true;
             // 
+            // cmsHarvestMenu
+            // 
+            this.cmsHarvestMenu.Name = "cmsHarvestMenu";
+            this.cmsHarvestMenu.Size = new System.Drawing.Size(61, 4);
+            // 
             // Mainform
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(752, 729);
+            this.ClientSize = new System.Drawing.Size(1128, 1094);
             this.Controls.Add(this.btnSwitch);
             this.Controls.Add(this.tabMainLayout);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Mainform";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "[kuranado]飞空艇潜水艇配装计算器";
@@ -190,7 +193,6 @@
 
         private System.Windows.Forms.TabControl tabMainLayout;
         private System.Windows.Forms.TabPage tpCraftCalc;
-        private System.Windows.Forms.TabPage tpSuitDesign;
         private System.Windows.Forms.SplitContainer scShowLayout;
         private System.Windows.Forms.TableLayoutPanel tlpPartsMenu;
         private System.Windows.Forms.Button btnSwitch;
@@ -198,6 +200,7 @@
         private System.Windows.Forms.ColumnHeader partColumn;
         private System.Windows.Forms.ColumnHeader normalMaterialColumn;
         private System.Windows.Forms.ColumnHeader npcMaterialColumn;
+        private System.Windows.Forms.ContextMenuStrip cmsHarvestMenu;
     }
 }
 
