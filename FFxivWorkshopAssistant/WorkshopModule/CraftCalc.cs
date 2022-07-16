@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Kuranado.Moe.FunctionalModule;
 
-namespace Kuranado.Moe.FFXIV.FunctionalModule
+namespace Kuranado.Moe.FFXIV.WorkshopModule
 {
-    [FunctionalModule("工坊计算器",false)]
+    [ModuleInfo("工坊计算器",false)]
     public partial class CraftCalc : UserControl
     {
         public CraftCalc()

@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Kuranado.Moe.FunctionalModule;
 
-namespace Kuranado.Moe.FFXIV.FunctionalModule
+namespace Kuranado.Moe.FFXIV.WorkshopModule
 {
-    [FunctionalModule("配装设计",false)]
+    [ModuleInfo("配装设计",false)]
     public partial class SuitDesign : UserControl
     {
         public SuitDesign()

@@ -5,19 +5,19 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Kuranado.Moe.FunctionalModule;
 
-namespace Kuranado.Moe.FFXIV.FunctionalModule
+namespace Kuranado.Moe.FFXIV.WorkshopModule
 {
-    [FunctionalModule("捡垃圾统计", true)]
+    [ModuleInfo("捡垃圾统计", true)]
     public partial class HarvestStatistics : UserControl
     {
         public HarvestStatistics()
         {
             InitializeComponent();
-            var menu = new ContextMenuStrip();
         }
 
         #region 控件事件响应
@@ -42,6 +42,21 @@ namespace Kuranado.Moe.FFXIV.FunctionalModule
             dgv[1, e.RowIndex].Value = output;
             dgv[2, e.RowIndex].Value = cost;
             dgv[3, e.RowIndex].Value = 0;
+        }
+
+        private void tsmiLoadCsv_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tsmiSaveCsv_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tsmiSaveAsCsv_Click(object sender, EventArgs e)
+        {
+
         }
         #endregion
 

@@ -1,6 +1,6 @@
-﻿namespace Kuranado.Moe.FFXIV.FunctionalModule
+﻿namespace Kuranado.Moe.FFXIV.WorkshopModule
 {
-    partial class CraftCalc
+    partial class SuitDesign
     {
         /// <summary> 
         /// 必需的设计器变量。

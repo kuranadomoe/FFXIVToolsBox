@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFxivWorkshopAssistant", "AirshipSubmarinesMaterialCalculator\FFxivWorkshopAssistant.csproj", "{2B8B1158-91EB-4B66-B711-9DE6174771CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFxivCommonSetting", "FFxivCommonSetting\FFxivCommonSetting.csproj", "{AC7FF237-B2AC-4020-9B2C-CD3C41C9743E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFXIVCommonSetting", "ffxiv_commonsetting\FFXIVCommonSetting.csproj", "{AC7FF237-B2AC-4020-9B2C-CD3C41C9743E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFxivWikiSpider", "FFxivWikiSpider\FFxivWikiSpider.csproj", "{7118786B-CB3B-4D64-8D3C-C6E8E15303B2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFXIVWikiSpider", "FFXIVWikiSpider\FFXIVWikiSpider.csproj", "{7118786B-CB3B-4D64-8D3C-C6E8E15303B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFxivWorkshopAssistant", "FFxivWorkshopAssistant\FFxivWorkshopAssistant.csproj", "{38E5DBA9-42F6-42AB-AD0B-4E3E3239364A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2B8B1158-91EB-4B66-B711-9DE6174771CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B8B1158-91EB-4B66-B711-9DE6174771CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B8B1158-91EB-4B66-B711-9DE6174771CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B8B1158-91EB-4B66-B711-9DE6174771CF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AC7FF237-B2AC-4020-9B2C-CD3C41C9743E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AC7FF237-B2AC-4020-9B2C-CD3C41C9743E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC7FF237-B2AC-4020-9B2C-CD3C41C9743E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +23,10 @@ Global
 		{7118786B-CB3B-4D64-8D3C-C6E8E15303B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7118786B-CB3B-4D64-8D3C-C6E8E15303B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7118786B-CB3B-4D64-8D3C-C6E8E15303B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38E5DBA9-42F6-42AB-AD0B-4E3E3239364A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38E5DBA9-42F6-42AB-AD0B-4E3E3239364A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38E5DBA9-42F6-42AB-AD0B-4E3E3239364A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38E5DBA9-42F6-42AB-AD0B-4E3E3239364A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

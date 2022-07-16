@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Kuranado.Moe.FFXIV</RootNamespace>
+    <Authors>kuranado.moe</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.43" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FFxivCommonSetting\FFxivCommonSetting.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="FunctionalModuleLib">
+      <HintPath>..\packages\FunctionalModule\FunctionalModuleLib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

@@ -21,7 +21,6 @@ namespace Kuranado.Moe.FFXIV
             if (!File.Exists(CommonSetting.ConfigPath))
                 File.Create(CommonSetting.ConfigPath).Close();
 #endif
-
             if (!File.Exists(CommonSetting.ConfigPath))
                 MessageBox.Show("配置文件缺失或没有访问权限!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else

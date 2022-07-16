@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>Kuranado.Moe.FFXIV</RootNamespace>
-    <AssemblyName>FFXIVCommonSetting</AssemblyName>
+    <RootNamespace>Kuranado.Moe.FFxiv</RootNamespace>
+    <AssemblyName>FFxivCommonSetting</AssemblyName>
   </PropertyGroup>
 
 </Project>

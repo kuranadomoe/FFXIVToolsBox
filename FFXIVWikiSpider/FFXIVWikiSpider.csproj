@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>Kuranado.Moe.FFXIV</RootNamespace>
+    <RootNamespace>Kuranado.Moe.FFxiv</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ffxiv_commonsetting\FFXIVCommonSetting.csproj" />
+    <ProjectReference Include="..\FFxivCommonSetting\FFxivCommonSetting.csproj" />
   </ItemGroup>
 
 </Project>

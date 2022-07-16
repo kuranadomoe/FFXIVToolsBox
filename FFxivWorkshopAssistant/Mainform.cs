@@ -6,12 +6,14 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using HtmlAgilityPack;
+using Kuranado.Moe.FunctionalModule;
 
 namespace Kuranado.Moe.FFXIV
 {
@@ -94,14 +96,6 @@ namespace Kuranado.Moe.FFXIV
             listItem.Text = "右上角切换潜水艇/飞空艇之后, 左键单击左侧的按钮添加对应部件到计算列表, 右键单击按钮从计算列表中删除对应部件";
             lvMaterialDetails.Items.Add(listItem);
             lvMaterialDetails.Columns[0].Width = -1;
-            tabMainLayout.Selected += (x, y) =>
-              {
-                  if (y.TabPageIndex == tabMainLayout.TabPages.IndexOf(tpSuitDesign))
-                  {
-                      MessageBox.Show("还没有实现哦~~~");
-                      tabMainLayout.SelectedIndex = 0;
-                  }
-              };
         }
 
         /// <summary>
@@ -286,6 +280,16 @@ namespace Kuranado.Moe.FFXIV
                 this.Invoke(new Action(() => MessageBox.Show("数据已更新!")));
             }
             new Thread(start).Start();
+
+            var assembly = this.GetType().Assembly;
+            foreach (var type in assembly.GetTypes())
+            {
+                var attr = type.GetCustomAttribute<ModuleInfoAttribute>();
+                if (attr != null && type.BaseType == typeof(UserControl))
+                {
+                    MessageBox.Show(type.FullName.ToString());
+                }
+            }
         }
 
         /// <summary>
